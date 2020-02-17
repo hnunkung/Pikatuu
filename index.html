@@ -63,9 +63,13 @@
         }
 
         .p1 {
-            font-size: 90px;
-            color: red;
-            margin-top: 150px;
+            font-size: 40px;
+            color: rgb(255, 255, 255);
+            margin-top: 200px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.447);
+            border-radius: 30px;
+            text-align: center;
         }
 
         .p2 {
@@ -77,8 +81,9 @@
             position: fixed;
         }
 
-        #drag1 {
+        #drag2 {
             position: fixed;
+            margin-left: 160px;
         }
 
         #label {
@@ -126,6 +131,9 @@
                             `<p class="p2">You Noob!</p>`;
                         div1.style.backgroundImage =
                             "url('https://i.pinimg.com/originals/f1/ea/c8/f1eac8e52461ac10c61089a3ffe2c016.jpg?fbclid=IwAR3K8KvPtwZzmvkDGF7zTkDez6ZfbiHN9z_axwZPYJaGlLu5IbFreC98-hw')";
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
                     }
                 }, 1500);
             }
@@ -134,10 +142,10 @@
                 console.log("Masterball");
                 setTimeout(() => {
                     document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                    div1.style.backgroundImage =
+                        "url('catch.png')";
                 }, 1500);
 
-                // div1.style.backgroundImage =
-                //     "url('mikachu.png')";
             }
 
         }
@@ -171,6 +179,8 @@
                 setTimeout(() => {
                     if (a == 1) {
                         document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                        div1.style.backgroundImage =
+                            "url('catch.png')";
                     }
                     if (a == 0) {
                         document.getElementById('div1').innerHTML =
@@ -192,6 +202,7 @@
             //document.getElementById("demo").innerHTML = x + ", " + y;
             console.log(`${x}` + " " + `${y}`)
 
+            drag2.style.marginLeft = 0 + `px`;
             drag2.style.top = y - 40 + `px`;
             drag2.style.left = x - 40 + `px`;
             drag2.style.position = 'fixed';
@@ -201,6 +212,8 @@
                 drag2.outerHTML = "";
                 setTimeout(() => {
                     document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                    div1.style.backgroundImage =
+                        "url('catch.png')";
                     //div1.style.backgroundImage = "url('pokemon-go-pokeball-png-3.png')";
 
                 }, 1500);
@@ -232,7 +245,8 @@
         <br>
         <!-- <img id="drag1" src="" draggable="true" ondragstart="drag(event)" width="336" height="359"> -->
         <div class="cont" style="display:flex; flex-flow: row;">
-            <div><img id="drag1" src="pokemon-go-pokeball-png-2.png" draggable="true" ondragstart="drag(event)"
+            <div>
+                <img id="drag1" src="pokemon-go-pokeball-png-2.png" draggable="true" ondragstart="drag(event)"
                     ontouchmove="myFunction(event)" width="120" height="120"></div>
             <div>
                 <img id="drag2" src="pokemon-go-pokeball-png-3.png" draggable="true" ondragstart="drag(event)"
