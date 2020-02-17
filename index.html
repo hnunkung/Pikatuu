@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <html>
+
+    <head>
+        <meta name="description" content="A daily wallet limitation management">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="Pakao">
+        <meta name="apple-mobile-web-app-title" content="Pakao">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-starturl" content="/?utm_source=homescreen">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- <link href="favicon.ico" rel="shortcut icon"> -->
+        <link rel="icon" type="image/png" href="icon.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="icon.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="icon.png" sizes="96x96">
+        <link rel="apple-touch-icon" sizes="72x72" href="icon.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="icon.png">
+        <link rel="apple-touch-icon" href="icon.png">
+        <meta name="theme-color" content="#ffc107">
+        <!-- <link rel="manifest" href="manifest.json"> -->
+        <meta name="generator" content="PWA Starter">
+        <title>Pokeตู่</title>
+        <meta charset=utf-8>
+        <meta name=description content="">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://jabont.com/jayss/jayss.css">
+        <link rel="stylesheet" type="text/css" href="assets/style.css?v4">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+            integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    </head>
+    <style>
+        body {
+            background-image: url('poke_go_bg.jpg');
+            background-position: center;
+            background-size: auto;
+            transition: all .3s;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        #div1 {
+            margin-top: 15px;
+            width: 300px;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+            background-image: url('prayet.png');
+            background-size: cover;
+            border-radius: 200px;
+            background-color: black;
+        }
+
+        .p1 {
+            font-size: 90px;
+            color: red;
+            margin-top: 150px;
+        }
+
+        .p2 {
+            font-size: 50px;
+            color: red;
+        }
+
+        #drag1 {
+            position: fixed;
+        }
+
+        #drag1 {
+            position: fixed;
+        }
+
+        #label {
+            width: 200px;
+            height: 50px;
+            margin-top: 30px;
+            background-color: rgba(0, 0, 0, 0.447);
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .text1 {
+            font-size: 20px;
+
+            color: white;
+        }
+    </style>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            if (data == "drag1") {
+                //ev.target.appendChild(document.getElementById(data));
+                console.log("Ultraball");
+                document.getElementById(data).outerHTML = "";
+                let a = Math.floor(Math.random() * 2);
+                console.log(a);
+                setTimeout(() => {
+                    if (a == 1) {
+                        document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                    }
+                    if (a == 0) {
+                        document.getElementById('div1').innerHTML =
+                            `<p class="p2">You Noob!</p>`;
+                        div1.style.backgroundImage =
+                            "url('https://i.pinimg.com/originals/f1/ea/c8/f1eac8e52461ac10c61089a3ffe2c016.jpg?fbclid=IwAR3K8KvPtwZzmvkDGF7zTkDez6ZfbiHN9z_axwZPYJaGlLu5IbFreC98-hw')";
+                    }
+                }, 1500);
+            }
+            if (data == "drag2") {
+                ev.target.appendChild(document.getElementById(data));
+                console.log("Masterball");
+                setTimeout(() => {
+                    document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                }, 1500);
+
+                // div1.style.backgroundImage =
+                //     "url('mikachu.png')";
+            }
+
+        }
+
+        function getOffset() {
+            var div = document.getElementById("div1");
+            var rect = div.getBoundingClientRect();
+            x_img = rect.left;
+            y_img = rect.top;
+            w_img = rect.width;
+            h_img = rect.height;
+            //console.log("Left: " + x + ", Top: " + y + ", Width: " + w + ", Height: " + h);
+        }
+
+
+        function myFunction(event) {
+            var x = event.touches[0].clientX;
+            var y = event.touches[0].clientY;
+            //document.getElementById("demo").innerHTML = x + ", " + y;
+            console.log(`${x}` + " " + `${y}`)
+
+            drag1.style.top = y - 40 + `px`;
+            drag1.style.left = x - 40 + `px`;
+            drag1.style.position = 'fixed';
+            if (isOnPicture(x + 40, y + 40)) {
+                console.log("on pic ultra");
+                console.log("Ultraball");
+                drag1.outerHTML = "";
+                let a = Math.floor(Math.random() * 2);
+                console.log(a);
+                setTimeout(() => {
+                    if (a == 1) {
+                        document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                    }
+                    if (a == 0) {
+                        document.getElementById('div1').innerHTML =
+                            `<p class="p2">You Noob!</p>`;
+                        div1.style.backgroundImage =
+                            "url('https://i.pinimg.com/originals/f1/ea/c8/f1eac8e52461ac10c61089a3ffe2c016.jpg?fbclid=IwAR3K8KvPtwZzmvkDGF7zTkDez6ZfbiHN9z_axwZPYJaGlLu5IbFreC98-hw')";
+                    }
+                }, 1500);
+
+
+            }
+
+
+        }
+
+        function myFunctionMaster(event) {
+            var x = event.touches[0].clientX;
+            var y = event.touches[0].clientY;
+            //document.getElementById("demo").innerHTML = x + ", " + y;
+            console.log(`${x}` + " " + `${y}`)
+
+            drag2.style.top = y - 40 + `px`;
+            drag2.style.left = x - 40 + `px`;
+            drag2.style.position = 'fixed';
+            if (isOnPicture(x + 40, y + 40)) {
+                console.log("on pic master");
+                console.log("Masterball");
+                drag2.outerHTML = "";
+                setTimeout(() => {
+                    document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+                    //div1.style.backgroundImage = "url('pokemon-go-pokeball-png-3.png')";
+
+                }, 1500);
+
+
+            }
+
+
+        }
+
+        function isOnPicture(x, y) {
+            getOffset();
+            if (x > x_img && x <= w_img && y > y_img && y <= h_img) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- <p>Drag the W3Schools image into the rectangle:</p> -->
+    <div class="container">
+        <div id="label">
+            <p class="text1">Pikatuu / CP 0</p>
+        </div>
+        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <br>
+        <!-- <img id="drag1" src="" draggable="true" ondragstart="drag(event)" width="336" height="359"> -->
+        <div class="cont" style="display:flex; flex-flow: row;">
+            <img id="drag1" src="pokemon-go-pokeball-png-2.png" draggable="true" ondragstart="drag(event)"
+                ontouchmove="myFunction(event)" width="120" height="120">
+            <img id="drag2" src="pokemon-go-pokeball-png-3.png" draggable="true" ondragstart="drag(event)"
+                ontouchmove="myFunctionMaster(event)" width="120" height="120"></div>
+
+    </div>
+    <p id="demo"></p>
+
+
+</body>
+
+</html>

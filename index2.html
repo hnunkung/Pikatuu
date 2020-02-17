@@ -1,0 +1,45 @@
+Most mobile devices do not listen to the drag events that are bound to the DOM. I would recommend using the touchmove
+event and the events that go along with with it. It would look something like:
+
+OPTION 1
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <style type="text/css">
+        #div1 {
+            width: 350px;
+            height: 70px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>Drag the W3Schools image into the rectangle:</p>
+
+    <div id="div1"></div>
+    <br>
+    <img id="drag1" src="img_logo.gif width=" 336" height="69">
+
+    <script type="text/javascript">
+        var el = document.getElementById('drag1');
+
+        el.addEventListener("touchstart", handleStart, false);
+        el.addEventListener("touchend", handleEnd, false);
+        el.addEventListener("touchcancel", handleCancel, false);
+        el.addEventListener("touchleave", handleEnd, false);
+        el.addEventListener("touchmove", handleMove, false);
+
+        function handleStart(event) {
+            console.log("aaaaaaa");
+        }
+
+        // ^ Do the same for the rest of the events
+    </script>
+</body>
+
+</html>
