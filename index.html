@@ -104,6 +104,31 @@
             color: white;
         }
     </style>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCkHylAmw8CrziErdqKUtU_b-rpnJfTdyM",
+        authDomain: "pet-catcher.firebaseapp.com",
+        databaseURL: "https://pet-catcher.firebaseio.com",
+        projectId: "pet-catcher",
+        storageBucket: "pet-catcher.appspot.com",
+        messagingSenderId: "651749511783",
+        appId: "1:651749511783:web:ee1e14fd2b944af1753ac2",
+        measurementId: "G-GELDS2DMY4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+
     <script>
         function allowDrop(ev) {
             ev.preventDefault();
@@ -161,11 +186,57 @@
         }
 
 
+        // firebase zone
+        let firestore = firebase.firestore()
+        let petInfo = []
+        let pet
+        initPet()
+
+        function initUi(){
+            document.getElementById('div1').innerHTML = '';
+            div1.style.backgroundImage = "";
+        }
+        function initPet(){
+            firestore.collection("pet-info").get().then(
+                (querySnapshot)=> {
+                    querySnapshot.forEach((data) => {
+                        petInfo.push(data.data())
+                    })
+                }).then(()=>{
+                    console.log(petInfo)
+                    let idx = Math.floor(Math.random() * petInfo.length)
+                    pet = petInfo[idx]
+                    return pet
+                }).then((pet) => {
+                    setPetInfo(pet.Name, pet.cp, pet.img)
+                })
+        }
+
+        function setPetInfo(name, cp , img){
+            div1.style.backgroundImage =
+                            "url("+img+")";
+            petName.innerHTML = name
+            petCp.innerHTML = cp
+        }
+
+        function catchSuccess(){
+            document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
+            div1.style.backgroundImage = "url('catch.png')";
+            console.log("Catch Success")
+            let petId = new Date().getTime().toString()
+            firestore.collection("pet-collection").doc(petId).set({
+                name: pet.Name,
+                img: pet.img,
+                cp: pet.cp
+            })
+
+        }
+
         function myFunction(event) {
             var x = event.touches[0].clientX;
             var y = event.touches[0].clientY;
             //document.getElementById("demo").innerHTML = x + ", " + y;
-            console.log(`${x}` + " " + `${y}`)
+            // console.log(`${x}` + " " + `${y}`)
 
             drag1.style.top = y - 40 + `px`;
             drag1.style.left = x - 40 + `px`;
@@ -178,9 +249,7 @@
                 console.log(a);
                 setTimeout(() => {
                     if (a == 1) {
-                        document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
-                        div1.style.backgroundImage =
-                            "url('catch.png')";
+                        catchSuccess()
                     }
                     if (a == 0) {
                         document.getElementById('div1').innerHTML =
@@ -188,7 +257,8 @@
                         div1.style.backgroundImage =
                             "url('https://i.pinimg.com/originals/f1/ea/c8/f1eac8e52461ac10c61089a3ffe2c016.jpg?fbclid=IwAR3K8KvPtwZzmvkDGF7zTkDez6ZfbiHN9z_axwZPYJaGlLu5IbFreC98-hw')";
                     }
-                }, 1500);
+                }, 700)
+                
 
 
             }
@@ -200,7 +270,7 @@
             var x = event.touches[0].clientX;
             var y = event.touches[0].clientY;
             //document.getElementById("demo").innerHTML = x + ", " + y;
-            console.log(`${x}` + " " + `${y}`)
+            // console.log(`${x}` + " " + `${y}`)
 
             drag2.style.marginLeft = 0 + `px`;
             drag2.style.top = y - 40 + `px`;
@@ -211,13 +281,9 @@
                 console.log("Masterball");
                 drag2.outerHTML = "";
                 setTimeout(() => {
-                    document.getElementById('div1').innerHTML = `<p class="p1">Gotcha!</p>`;
-                    div1.style.backgroundImage =
-                        "url('catch.png')";
-                    //div1.style.backgroundImage = "url('pokemon-go-pokeball-png-3.png')";
-
-                }, 1500);
-
+                    catchSuccess()
+                }, 1000);
+                
 
             }
 
@@ -231,6 +297,8 @@
             }
             return false;
         }
+
+
     </script>
 </head>
 
@@ -239,7 +307,7 @@
     <!-- <p>Drag the W3Schools image into the rectangle:</p> -->
     <div class="container">
         <div id="label">
-            <p class="text1">Pikatuu / CP 0</p>
+            <p class="text1"><span id="petName">Pikatuu</span>/ CP <span id="petCp">0</span></p>
         </div>
         <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         <br>
